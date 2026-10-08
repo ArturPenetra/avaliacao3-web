@@ -1,0 +1,7 @@
+target/
+.idea/
+*.iml
+.vscode/
+# Arquivos de dados do H2 (sao recriados pelas migrations do Flyway)
+DATA/
+HELP.md

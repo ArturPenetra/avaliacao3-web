@@ -1,0 +1,58 @@
+### 1. Cadastrar conserto (POST) -> 201 + Location
+POST http://localhost:8080/consertos
+Content-Type: application/json
+
+{
+  "dataEntrada": "01/10/2026",
+  "dataSaida": "05/10/2026",
+  "mecanico": { "nome": "Carlos Silva", "anosExperiencia": 12 },
+  "veiculo": { "marca": "Fiat", "modelo": "Uno", "ano": "2012", "cor": "Prata" }
+}
+
+### 2. Cadastrar so com os campos obrigatorios (sem datas, sem cor, sem anos de experiencia)
+POST http://localhost:8080/consertos
+Content-Type: application/json
+
+{
+  "mecanico": { "nome": "Ana Souza" },
+  "veiculo": { "marca": "VW", "modelo": "Gol", "ano": "2018" }
+}
+
+### 3. Validacao: nome vazio, ano invalido, data fora do formato -> 400
+POST http://localhost:8080/consertos
+Content-Type: application/json
+
+{
+  "dataEntrada": "2026-10-01",
+  "mecanico": { "nome": "" },
+  "veiculo": { "marca": "", "modelo": "Gol", "ano": "18" }
+}
+
+### 4. Listar TODOS os dados, com paginacao -> 200
+GET http://localhost:8080/consertos?page=0&size=5&sort=id
+
+### 5. Listar alguns dados (id, datas, mecanico, marca, modelo; so ativos; sem paginacao) -> 200
+GET http://localhost:8080/consertos/algunsdados
+
+### 6. Buscar um conserto pelo id -> 200 (ou 404 se nao existir)
+GET http://localhost:8080/consertos/1
+
+### 7. Alterar data de saida / nome / anos de experiencia do mecanico -> 200 (ou 404)
+PUT http://localhost:8080/consertos
+Content-Type: application/json
+
+{
+  "id": 1,
+  "dataSaida": "09/10/2026",
+  "nomeMecanico": "Carlos Silva Jr.",
+  "anosExperienciaMecanico": 13
+}
+
+### 8. Exclusao logica (ativo = false) -> 204 (ou 404)
+DELETE http://localhost:8080/consertos/1
+
+### 9. Depois do DELETE, o id 1 nao aparece mais aqui...
+GET http://localhost:8080/consertos/algunsdados
+
+### 10. ...mas continua no banco (GET completo mostra "ativo": false)
+GET http://localhost:8080/consertos
