@@ -1,0 +1,22 @@
+package br.edu.ifsp.prw3.oficina_api.usuario;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+// Logica de autenticacao: o Spring Security chama loadUserByUsername() no login
+@Service
+public class AutenticacaoService implements UserDetailsService {
+
+    @Autowired
+    private UsuarioRepository repository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username)
+            throws UsernameNotFoundException {
+
+        return repository.findByLogin(username);
+    }
+}
