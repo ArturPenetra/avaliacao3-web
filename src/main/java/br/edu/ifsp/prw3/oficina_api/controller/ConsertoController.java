@@ -90,7 +90,6 @@ public class ConsertoController {
 
         Conserto conserto = consertoOptional.get();
         conserto.atualizarInformacoes(dados);
-        // Nao precisa chamar save(): dentro da transacao a JPA atualiza o BD.
         return ResponseEntity.ok(new DadosDetalhamentoConserto(conserto));
     }
 

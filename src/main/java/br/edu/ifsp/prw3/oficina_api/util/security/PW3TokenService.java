@@ -16,7 +16,6 @@ import java.time.ZoneOffset;
 @Service
 public class PW3TokenService {
 
-    // Senha principal lida do application.properties (variavel de ambiente JWT_SECRET)
     @Value("${pw3.senha.principal.geracao.token}")
     private String secret;
 
@@ -37,7 +36,6 @@ public class PW3TokenService {
         }
     }
 
-    // Valida o token, e recupera o subject (login) dentro do token:
     public String getSubject(String tokenJWT) {
         try {
             var algoritmo = Algorithm.HMAC256(secret);
@@ -51,7 +49,6 @@ public class PW3TokenService {
         }
     }
 
-    // Hora atual + 2 horas
     private Instant dataExpiracao() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }

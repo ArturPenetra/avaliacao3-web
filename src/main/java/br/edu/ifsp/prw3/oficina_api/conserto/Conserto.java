@@ -34,7 +34,6 @@ public class Conserto {
     @Embedded
     private Veiculo veiculo;
 
-    // exclusao logica
     private boolean ativo;
 
     public Conserto(DadosCadastroConserto dados) {

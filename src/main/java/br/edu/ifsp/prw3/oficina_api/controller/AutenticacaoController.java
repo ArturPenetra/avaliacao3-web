@@ -31,10 +31,8 @@ public class AutenticacaoController {
 
         var authentication = manager.authenticate(token);
 
-        // Criando o token JWT:
         var tokenJWT = tokenService.gerarToken((Usuario) authentication.getPrincipal());
 
-        // Devolvendo o token encapsulado no DTO DadosTokenJWT:
         return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
     }
 }

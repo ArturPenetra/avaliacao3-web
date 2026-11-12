@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-// Logica de autenticacao: o Spring Security chama loadUserByUsername() no login
 @Service
 public class AutenticacaoService implements UserDetailsService {
 

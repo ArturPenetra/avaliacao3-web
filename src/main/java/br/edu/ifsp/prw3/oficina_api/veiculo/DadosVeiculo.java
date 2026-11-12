@@ -15,5 +15,5 @@ public record DadosVeiculo(
         @Pattern(regexp = "\\d{4}", message = "O ano do veículo deve ter o formato xxxx")
         String ano,
 
-        String cor) {   // opcional
+        String cor) {
 }

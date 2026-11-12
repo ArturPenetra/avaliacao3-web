@@ -25,21 +25,14 @@ public class SecurityConfigurations {
 
         return http.csrf(csrf -> csrf.disable())
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                // configurar autorizações para as requisições:
                 .authorizeHttpRequests(req -> {
-                    // liberar o /login
                     req.requestMatchers("/login").permitAll();
-                    // todas as outras, só para usuários autenticados
                     req.anyRequest().authenticated();
                 })
-                // definindo a ordem de aplicação dos filtros:
-                // primeiro, o nosso filtro (classe SecurityFilter injetada aqui)
-                // depois, o filtro de usuarios autenticados do proprio spring
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
-    // Exporta o AuthenticationManager como Bean, para ser injetado no controller de login
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
             throws Exception {
@@ -47,7 +40,6 @@ public class SecurityConfigurations {
         return configuration.getAuthenticationManager();
     }
 
-    // Indica ao Spring que as senhas estao codificadas com BCrypt
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

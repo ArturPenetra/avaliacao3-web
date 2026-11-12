@@ -27,25 +27,16 @@ public class SecurityFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        // Recuperando o cabeçalho Authorization (o token JWT):
         var authorizationHeader = request.getHeader("Authorization");
 
-        // Lembrando: /login não envia cabeçalho authorization!
-        // Se o JWT foi enviado...
         if (authorizationHeader != null) {
-            // Tira o 'Bearer':
             authorizationHeader = authorizationHeader.replace("Bearer ", "");
-            // Chamar o método que valida o token, e recupera o login:
             var subject = pw3tokenservice.getSubject(authorizationHeader);
-            // Carrega o usuário com esse login do BD:
             var usuario = repository.findByLogin(subject);
-            // Cria um objeto que representa a identidade de um usuário autenticado.
             var authentication = new UsernamePasswordAuthenticationToken(usuario, null,
                     usuario.getAuthorities());
-            // Finalmente, manda o Spring AUTENTICAR esse usuário:
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        // Para executar o próximo filtro, ou seguir o processamento:
         filterChain.doFilter(request, response);
     }
 }
